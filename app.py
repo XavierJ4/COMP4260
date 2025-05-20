@@ -4,16 +4,26 @@ import os
 
 app = Flask(__name__)
 
-# Configuración de la base de datos desde variables de entorno
-server = os.getenv("SQL_SERVER")
-database = os.getenv("SQL_DATABASE")
-username = os.getenv("SQL_USERNAME")
-password = os.getenv("SQL_PASSWORD")
+
+server = "xavierserverproeycto.database.windows.net"  # or "localhost\\SQLEXPRESS" if using SQL Express
+database = "proyecto_tareas"
+username = "adminuser"
+password = "password@4"
 driver = "{ODBC Driver 18 for SQL Server}"
 
-connection_string = f"DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password}"
+# Configuración de la base de datos desde variables de entorno
+# server = os.getenv("SQL_SERVER")
+# database = os.getenv("SQL_DATABASE")
+# username = os.getenv("SQL_USERNAME")
+# password = os.getenv("SQL_PASSWORD")
+# driver = "{ODBC Driver 18 for SQL Server}"
+
+connection_string = f"DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password};TrustServerCertificate=yes"
+
 conn = pyodbc.connect(connection_string)
 cursor = conn.cursor()
+
+
 
 # Crear tabla si no existe (una sola vez)
 cursor.execute("""
